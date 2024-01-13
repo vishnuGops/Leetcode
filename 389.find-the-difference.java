@@ -11,27 +11,19 @@ import java.util.Map;
 class Solution {
     public char findTheDifference(String s, String t) {
         Map<Character, Integer> map = new HashMap<>();
-        char temp = ' ';
-        // fill the map with string s characters
-        for (int i = 0; i < s.length(); i++) {
-            temp = s.charAt(i);
-            if (map.containsKey(temp)) {
-                map.put(temp, map.get(temp) + 1);
-            } else {
-                map.put(temp, 1);
-            }
+
+        for (char c : s.toCharArray()) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
         }
 
-        // check the map for extra char
-        for (int i = 0; i < t.length(); i++) {
-            temp = t.charAt(i);
-            if (map.containsKey(temp) && map.get(temp) > 0) {
-                map.put(temp, map.get(temp) - 1);
+        for (char c : t.toCharArray()) {
+            if (map.containsKey(c) && map.get(c) > 0) {
+                map.put(c, map.get(c) - 1);
             } else {
-                break;
+                return c;
             }
         }
-        return temp;
+        throw new IllegalArgumentException("Input strings are not valid.");
     }
 }
 // @lc code=end
